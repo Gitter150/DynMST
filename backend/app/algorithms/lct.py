@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from math import inf
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import Optional, Set
 
 
 NEG_INF = -10**18
@@ -19,6 +18,7 @@ class LCTNode:
     rev: bool = False
     max_val: int = NEG_INF
     max_node: Optional["LCTNode"] = None
+    non_tree_edges: Set[int] = field(default_factory=set)
 
     def __post_init__(self) -> None:
         self.max_val = self.val

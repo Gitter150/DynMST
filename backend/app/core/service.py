@@ -19,7 +19,10 @@ class MSTService:
 
     def apply_mutation(self, req: MutationRequest) -> MutationResponse:
         def lct_op() -> None:
-            if req.operation == "insert_edge":
+            if req.operation == "insert_node":
+                assert req.node is not None
+                self.dynamic.insert_node(req.node)
+            elif req.operation == "insert_edge":
                 assert req.u is not None and req.v is not None and req.w is not None
                 self.dynamic.insert_edge(req.u, req.v, req.w)
             elif req.operation == "delete_edge":
@@ -61,6 +64,7 @@ class MSTService:
         return MutationResponse(
             lct_time_ms=lct_time_ms,
             kruskal_time_ms=kruskal_time_ms,
+            deletion_search_time_ms=self.dynamic.last_delete_search_ms,
             nodes=sorted(self.dynamic.node_ids),
             edges=edges,
             mst_total_weight=total_w,

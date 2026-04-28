@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 
 MutationType = Literal[
+    "insert_node",
     "insert_edge",
     "delete_edge",
     "update_edge_weight",
@@ -32,6 +33,7 @@ class EdgeView(BaseModel):
 class MutationResponse(BaseModel):
     lct_time_ms: float
     kruskal_time_ms: float
+    deletion_search_time_ms: float = 0.0
     nodes: List[int]
     edges: List[EdgeView]
     mst_total_weight: int
